@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Chatbot</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  margin:0;
+  background:#0b0b0b;
+  color:#fff;
+  font-family:Arial;
+}
+.topbar {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:15px;
+  background:#111;
+}
+.logo {
+  font-weight:bold;
+}
+.chat {
+  padding:20px;
+}
+.share {
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+  <div class="logo">🤖 Chatbot AI</div>
+  <div class="share" onclick="share()">🔗 Share</div>
+</div>
+
+<div class="chat">
+  <p>Hello! How can I help you?</p>
+</div>
+
+<script>
+function share(){
+  navigator.share
+    ? navigator.share({ title:"Chatbot AI" })
+    : alert("Share not supported");
+}
+</script>
+
+</body>
+</html>

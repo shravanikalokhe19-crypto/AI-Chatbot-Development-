@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ChatBot UI</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Inter", system-ui, sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: linear-gradient(90deg, #1f2933 0%, #1b1f3b 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chat-container {
+            width: 480px;
+            height: 560px;
+            background: rgba(15, 18, 25, 0.95);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        /* HEADER */
+        .chat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 22px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c7cff, #5cffc6, #ff7ad9);
+        }
+
+        .title {
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .subtitle {
+            color: #9aa4b2;
+            font-size: 12px;
+        }
+
+        .login-icon {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        /* CHAT BODY */
+        .chat-body {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .user-msg {
+            text-align: right;
+            margin-bottom: 12px;
+        }
+
+        .user-msg span {
+            background: #2563eb;
+            padding: 10px 14px;
+            border-radius: 12px;
+            color: white;
+            max-width: 85%;
+            display: inline-block;
+        }
+
+        .bot-msg {
+            text-align: left;
+            margin-bottom: 12px;
+        }
+
+        .bot-msg span {
+            background: #1f2937;
+            padding: 10px 14px;
+            border-radius: 12px;
+            color: #e5e7eb;
+            max-width: 85%;
+            display: inline-block;
+        }
+
+        /* INPUT */
+        .chat-input {
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(10, 12, 18, 0.95);
+        }
+
+        .icon-btn {
+            background: transparent;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .chat-input input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: white;
+            font-size: 14px;
+        }
+
+        .send-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: #0f172a;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* LOGIN MODAL */
+        .login-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .login-box {
+            background: white;
+            width: 360px;
+            padding: 28px;
+            border-radius: 14px;
+            text-align: center;
+        }
+
+        .login-box h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .login-box p {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: black;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .signup-btn {
+            width: 100%;
+            padding: 12px;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .login-box a {
+            display: block;
+            margin-top: 14px;
+            font-size: 13px;
+            color: #555;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="chat-container">
+
+    <div class="chat-header">
+        <div class="header-left">
+            <div class="logo"></div>
+            <div>
+                <div class="title">ChatBot</div>
+                <div class="subtitle">Ask me anything</div>
+            </div>
+        </div>
+        <button class="login-icon" id="openLogin">🔒</button>
+    </div>
+
+    <div class="chat-body" id="chatBody"></div>
+
+    <!-- SINGLE INPUT BAR -->
+    <div class="chat-input">
+        <button class="icon-btn" id="fileBtn">📎</button>
+        <input id="messageInput" placeholder="Ask anything...">
+        <button class="send-btn" id="sendBtn">➤</button>
+        <button class="icon-btn" id="micBtn"></button>
+    </div>
+
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="login-modal" id="loginModal">
+    <div class="login-box">
+        <h2>Thanks for trying ChatGPT</h2>
+        <p>Log in or sign up to get smarter responses, upload files and images, and more.</p>
+
+        <button class="login-btn">Log in</button>
+        <button class="signup-btn">Sign up for free</button>
+        <a id="closeLogin">Stay logged out</a>
+    </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
